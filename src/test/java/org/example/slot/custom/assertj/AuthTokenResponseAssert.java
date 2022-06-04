@@ -1,7 +1,7 @@
 package org.example.slot.custom.assertj;
 
 import org.assertj.core.api.ObjectAssert;
-import org.example.slot.models.auth.AuthTokenResponse;
+import org.example.slot.models.rest.auth.AuthTokenResponse;
 
 public class AuthTokenResponseAssert extends ObjectAssert<AuthTokenResponse> {
 

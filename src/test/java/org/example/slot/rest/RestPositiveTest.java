@@ -1,42 +1,27 @@
 package org.example.slot.rest;
 
 import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
-import io.restassured.RestAssured;
-import io.restassured.filter.log.RequestLoggingFilter;
-import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.mapper.ObjectMapperType;
 import io.restassured.response.ResponseOptions;
-import org.example.slot.models.auth.AuthTokenRequest;
-import org.example.slot.models.auth.AuthTokenResponse;
-import org.example.slot.models.player.NewPlayerRequest;
-import org.example.slot.models.player.Player;
-import org.example.slot.services.RestApiService;
+import org.example.slot.models.rest.auth.AuthTokenRequest;
+import org.example.slot.models.rest.auth.AuthTokenResponse;
+import org.example.slot.models.rest.player.NewPlayerRequest;
+import org.example.slot.models.rest.player.Player;
 import org.junit.jupiter.api.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
 import static org.example.slot.custom.assertj.AuthTokenResponseAssert.assertThat;
 import static org.example.slot.custom.assertj.NewPlayerResponseAssert.assertThat;
 
-@SpringBootTest(classes = RestApiService.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class RestPositiveTest {
-
-    @Autowired
-    private RestApiService apiService;
+public class RestPositiveTest extends RestTest {
 
     private String guestToken;
     private NewPlayerRequest newPlayerRequest;
     private Player createdPlayer;
     private String createdPlayerToken;
-
-    @BeforeAll
-    public static void setRestAssuredLogging() {
-        RestAssured.filters(new RequestLoggingFilter(), new ResponseLoggingFilter());
-    }
 
     @Test
     @Order(1)

@@ -1,4 +1,4 @@
-package org.example.slot.models.player;
+package org.example.slot.models.rest.player;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

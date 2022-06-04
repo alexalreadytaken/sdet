@@ -1,8 +1,8 @@
 package org.example.slot.custom.assertj;
 
 import org.assertj.core.api.ObjectAssert;
-import org.example.slot.models.player.NewPlayerRequest;
-import org.example.slot.models.player.Player;
+import org.example.slot.models.rest.player.NewPlayerRequest;
+import org.example.slot.models.rest.player.Player;
 
 public class NewPlayerResponseAssert extends ObjectAssert<Player> {
     public NewPlayerResponseAssert(Player resp) {

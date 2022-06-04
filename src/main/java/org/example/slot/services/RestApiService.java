@@ -5,8 +5,8 @@ import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import lombok.RequiredArgsConstructor;
-import org.example.slot.models.auth.AuthTokenRequest;
-import org.example.slot.models.player.NewPlayerRequest;
+import org.example.slot.models.rest.auth.AuthTokenRequest;
+import org.example.slot.models.rest.player.NewPlayerRequest;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 

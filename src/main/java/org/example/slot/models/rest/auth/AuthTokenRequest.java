@@ -1,4 +1,4 @@
-package org.example.slot.models.auth;
+package org.example.slot.models.rest.auth;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
