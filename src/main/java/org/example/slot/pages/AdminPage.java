@@ -14,6 +14,7 @@ public class AdminPage {
 
     private final By usersBy = By.xpath("//a[@data-target='#s-menu-users']");
     private final By playersBy = By.xpath("//a[@href='/user/player/admin']");
+    private final By headerUsernameBy = By.xpath("//li[contains(@class,'nav-profile')]//span");
     private final By firstPlayerIdBy =
             By.xpath("//div[@id='payment-system-transaction-grid']//tr[1]//td[3]");// FIXME: 6/4/22
 
@@ -29,7 +30,7 @@ public class AdminPage {
     @SneakyThrows
     public void sortByColumn(String column) {
         driver.findElement(columnButtonBy(column)).click();
-        synchronized (driver){// FIXME: 6/4/22?
+        synchronized (driver) {// FIXME: 6/4/22?
             driver.wait(2000);
         }
     }
@@ -37,5 +38,10 @@ public class AdminPage {
     public void firstPlayerIdStartsWith(String str) {
         var id = driver.findElement(firstPlayerIdBy);
         assert id.getText().startsWith(str);
+    }
+
+    public void usernameOnHeaderIs(String username) {
+        var usernameSpan = driver.findElement(headerUsernameBy);
+        assert usernameSpan.getText().equals(username);
     }
 }

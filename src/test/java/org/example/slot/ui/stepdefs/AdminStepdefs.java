@@ -25,4 +25,9 @@ public class AdminStepdefs {
     public void firstUserIdStartsWith(String str) {
         adminPage.firstPlayerIdStartsWith(str);
     }
+
+    @And("user authorized as {string}")
+    public void userAuthorizedAs(String username) {
+        adminPage.usernameOnHeaderIs(username);
+    }
 }
