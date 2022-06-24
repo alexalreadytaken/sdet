@@ -3,11 +3,9 @@ package org.example.slot.rest;
 import io.restassured.mapper.ObjectMapperType;
 import io.restassured.response.ResponseOptions;
 import org.apache.commons.lang3.RandomStringUtils;
-import org.assertj.core.api.AssertionsForClassTypes;
 import org.example.slot.models.rest.ErrorResponseMessage;
 import org.example.slot.models.rest.FieldValidationError;
 import org.example.slot.models.rest.auth.AuthTokenRequest;
-import org.example.slot.models.rest.auth.AuthTokenResponse;
 import org.example.slot.models.rest.player.NewPlayerRequest;
 import org.junit.jupiter.api.Test;
 
@@ -23,7 +21,10 @@ public class RestNegativeTest extends RestTest {
     public void testGetGuestTokenInvalidGrantType() {
         var req = new AuthTokenRequest("grant?", AuthTokenRequest.guest().scope(), null, null);
         var resp = apiService.authorize(req);
-        assertThat(resp).isNotNull().extracting(ResponseOptions::statusCode).isEqualTo(400);
+        assertThat(resp)
+                .isNotNull()
+                .extracting(ResponseOptions::statusCode)
+                .isEqualTo(400);
         var err = resp.body().as(ErrorResponseMessage.class, ObjectMapperType.JACKSON_2);
         assertThat(err)
                 .isBadRequest()
@@ -35,7 +36,10 @@ public class RestNegativeTest extends RestTest {
         String scope = "who?";//only one word
         var req = new AuthTokenRequest(AuthTokenRequest.guest().grantType(), scope, null, null);
         var resp = apiService.authorize(req);
-        assertThat(resp).isNotNull().extracting(ResponseOptions::statusCode).isEqualTo(400);
+        assertThat(resp)
+                .isNotNull()
+                .extracting(ResponseOptions::statusCode)
+                .isEqualTo(400);
         var err = resp.body().as(ErrorResponseMessage.class, ObjectMapperType.JACKSON_2);
         assertThat(err)
                 .isBadRequest()
@@ -52,7 +56,10 @@ public class RestNegativeTest extends RestTest {
                 "name", "surname", null
         );
         var resp = apiService.regNewPlayer(req, token);
-        assertThat(resp).isNotNull().extracting(ResponseOptions::statusCode).isEqualTo(422);
+        assertThat(resp)
+                .isNotNull()
+                .extracting(ResponseOptions::statusCode)
+                .isEqualTo(422);
         // FIXME: 6/4/22 least 6 characters???
     }
 
@@ -62,17 +69,13 @@ public class RestNegativeTest extends RestTest {
         var req = NewPlayerRequest.randomValidPlayer();
         apiService.regNewPlayer(req, token);
         var resp = apiService.regNewPlayer(req, token);
-        assertThat(resp).isNotNull().extracting(ResponseOptions::statusCode).isEqualTo(422);
+        assertThat(resp)
+                .isNotNull()
+                .extracting(ResponseOptions::statusCode)
+                .isEqualTo(422);
         var errors = resp.body().as(FieldValidationError[].class, ObjectMapperType.JACKSON_2);
         assertThat(Arrays.stream(errors).toList())
                 .containsEmailTakenError(req.email())
                 .containsUsernameTakenError(req.username());
-    }
-
-    private String getGuestToken() {
-        var resp = apiService.authorize(AuthTokenRequest.guest());
-        AssertionsForClassTypes.assertThat(resp).isNotNull().extracting(ResponseOptions::statusCode).isEqualTo(200);
-        var token = resp.body().as(AuthTokenResponse.class, ObjectMapperType.JACKSON_2);
-        return token.accessToken();
     }
 }

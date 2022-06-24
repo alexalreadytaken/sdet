@@ -26,11 +26,7 @@ public class RestPositiveTest extends RestTest {
     @Test
     @Order(1)
     public void testGetGuestToken() {
-        var resp = apiService.authorize(AuthTokenRequest.guest());
-        assertThat(resp).isNotNull().extracting(ResponseOptions::statusCode).isEqualTo(200);
-        var token = resp.body().as(AuthTokenResponse.class, ObjectMapperType.JACKSON_2);
-        assertThat(token).isValidToken();
-        guestToken = token.accessToken();
+        guestToken = getGuestToken();
     }
 
     @Test
